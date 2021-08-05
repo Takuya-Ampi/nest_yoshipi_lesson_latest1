@@ -10,12 +10,16 @@ export class UsersController {
   findAll() {
     return this.usersService.findAll()
   }
-  
-  @Get(':id')
-  @UsePipes(new ParseIntPipe())
-  findOne(@Param('id') id: number) {
-    return typeof id
+  @Get(':username')
+  findOne(@Param('username') username: string) {
+    return this.usersService.findOne(username)
   }
+  
+  // @Get(':id')
+  // @UsePipes(new ParseIntPipe())
+  // findOne(@Param('id') id: number) {
+  //   return typeof id
+  // }
   @Post()
   create(@Body(ValidationPipe) createUserDto: CreateUserDto) {
     return this.usersService.create(createUserDto)
