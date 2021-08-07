@@ -5,6 +5,7 @@ import { Model } from 'mongoose';
 import { CreateUserDto } from 'src/users/dto/create-user.dto';
 import { IUser } from 'src/users/interfaces/user.interface';
 import { UsersService } from 'src/users/users.service';
+import * as bcrypt from 'bcrypt'
 
 @Injectable()
 export class AuthService {
@@ -16,7 +17,10 @@ export class AuthService {
 
   async validateUser({ username, password }: CreateUserDto) {
     const user = await this.usersService.findOne(username)
-    return true
+    if (!user) throw new NotFoundException('username or password is incorrect')
+    const isValid = await bcrypt.compare(password, user.password)
+    if (!isValid) throw new NotFoundException('username or password is incorrect')
+    return isValid
   }
 
   async login(user: CreateUserDto) {
