@@ -1,0 +1,3 @@
+interface IJwtPayload {
+  username: string
+}

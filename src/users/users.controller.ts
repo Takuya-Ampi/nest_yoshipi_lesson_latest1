@@ -1,4 +1,5 @@
-import { Controller, Post, Body, Get, Param, ParseIntPipe, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Controller, Post, Body, Get, Param, ParseIntPipe, UsePipes, ValidationPipe, UseGuards, Request, NotFoundException } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UsersService } from './users.service';
 
@@ -11,7 +12,8 @@ export class UsersController {
     return this.usersService.findAll()
   }
   @Get(':username')
-  findOne(@Param('username') username: string) {
+  @UseGuards(AuthGuard('jwt'))
+  async findOne(@Param('username') username: string, @Request() req: any) {
     return this.usersService.findOne(username)
   }
   
