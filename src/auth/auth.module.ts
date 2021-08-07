@@ -13,7 +13,7 @@ import { AuthService } from './auth.service';
       secret: 'secretfefeZensen!' // パスワード
     }),
     UsersModule,
-    MongooseModule.forFeature([{ name: 'User', schema: UserSchema }])
+    // MongooseModule.forFeature([{ name: 'User', schema: UserSchema }])
   ],
   controllers: [AuthController],
   providers: [AuthService]
